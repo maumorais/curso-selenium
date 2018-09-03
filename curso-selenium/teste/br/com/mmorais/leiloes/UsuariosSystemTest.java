@@ -4,14 +4,24 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import br.com.mmorais.common.CadastroPageObject;
+import br.com.mmorais.leiloes.pageObjects.UsuariosPage;
 
 public class UsuariosSystemTest {
 	
 	private WebDriver driver;
 	private UsuariosPage usuarios;
+	
+	@BeforeClass
+	public static void limparBase() {
+		System.setProperty("webdriver.chrome.driver", "D:/Dev/webdrivers/chromedriver.exe");
+		new ChromeDriver().get("http://localhost:8080/apenas-teste/limpa");
+	}
 	
 	@Before
 	public void inicializa() {
@@ -31,14 +41,33 @@ public class UsuariosSystemTest {
 	public void deveIncluirUmUsuario() {
 		
 		String nomeTeste = "Adriano Xavier";
-		String emailTeste = "axavier@empresa.com.br";		
+		String emailTeste = "axavier@empresa.com.br";	
 		
-		this.usuarios.novo().cadastra(nomeTeste, emailTeste);
+		String[] valoresTeste = {nomeTeste, emailTeste};
 		
-		assertTrue(this.usuarios.existeNaListagem(nomeTeste, emailTeste));
+		this.usuarios.novo().cadastra(valoresTeste);
+		assertTrue(this.usuarios.existeNaListagem(valoresTeste,false));
 		
 	}
-	
+
+	@Test
+	public void deveAlterarUmUsuario() {
+		
+		String nomeTeste = "José de Arimatea";
+		String emailTeste = "jarimatea@empresa.com.br";	
+		String novoNomeTeste = "Maria Madalena";
+		String novoEmailTeste = "mmadalena@empresa.com.br";
+		
+		String[] valoresTeste = {nomeTeste, emailTeste};
+		String[] novosValoresTeste = {novoNomeTeste, novoEmailTeste};
+		
+		this.usuarios.novo().cadastra(valoresTeste);
+		assertTrue(this.usuarios.existeNaListagem(valoresTeste,false));
+		usuarios.altera(valoresTeste).cadastra(novosValoresTeste);
+		assertTrue(this.usuarios.existeNaListagem(novosValoresTeste,false));
+		
+	}
+
 	@Test
 	public void naoDeveIncluirUmUsuarioSemNome() {
 		
@@ -46,9 +75,11 @@ public class UsuariosSystemTest {
 		String emailTeste = "axavier@empresa.com.br";		
 		String[] mensagensErro = {"Nome obrigatorio!"};
 		
-		this.usuarios.novo().cadastra(nomeTeste, emailTeste);
+		String[] valoresTeste = {nomeTeste, emailTeste};
 		
-		assertTrue(this.usuarios.exibeMensagemErro(mensagensErro));
+		CadastroPageObject novoUsuario = this.usuarios.novo();
+		novoUsuario.cadastra(valoresTeste);
+		assertTrue(novoUsuario.exibeMensagemErro(mensagensErro));
 
 	}
 
@@ -59,32 +90,39 @@ public class UsuariosSystemTest {
 		String emailTeste = "";		
 		String[] mensagensErro = {"E-mail obrigatorio!"};
 		
-		this.usuarios.novo().cadastra(nomeTeste, emailTeste);
+		String[] valoresTeste = {nomeTeste, emailTeste};
 		
-		assertTrue(this.usuarios.exibeMensagemErro(mensagensErro));
+		CadastroPageObject novoUsuario = this.usuarios.novo();
+		novoUsuario.cadastra(valoresTeste);
+		assertTrue(novoUsuario.exibeMensagemErro(mensagensErro));
 
 	}
 	
 	@Test
 	public void naoDeveIncluirUmUsuarioSemNomeEEmail() {
 		
-		
 		String nomeTeste = "";
 		String emailTeste = "";		
 		String[] mensagensErro = {"Nome obrigatorio!", "E-mail obrigatorio!"};
 		
-		this.usuarios.novo().cadastra(nomeTeste, emailTeste);
+		String[] valoresTeste = {nomeTeste, emailTeste};
 		
-		assertTrue(this.usuarios.exibeMensagemErro(mensagensErro));
+		CadastroPageObject novoUsuario = this.usuarios.novo();
+		novoUsuario.cadastra(valoresTeste);
+		assertTrue(novoUsuario.exibeMensagemErro(mensagensErro));
 	}
 	
 	@Test
 	public void deveExcluirUmUsuario() {
 		String nomeTeste = "João da Silva";
 		String emailTeste = "jsilva@empresa.com.br";	
-		this.usuarios.novo().cadastra(nomeTeste, emailTeste);
-		assertTrue(this.usuarios.existeNaListagem(nomeTeste, emailTeste));
-		usuarios.exclui(nomeTeste);
-		assertTrue(!this.usuarios.existeNaListagem(nomeTeste, emailTeste));
+		
+		String[] valoresTeste = {nomeTeste, emailTeste};
+		
+		this.usuarios.novo().cadastra(valoresTeste);
+		assertTrue(this.usuarios.existeNaListagem(valoresTeste,false));
+		usuarios.exclui(valoresTeste, true);
+		assertTrue(!this.usuarios.existeNaListagem(valoresTeste,false));
 	}
+		
 }
