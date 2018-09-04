@@ -20,7 +20,9 @@ public class UsuariosSystemTest {
 	@BeforeClass
 	public static void limparBase() {
 		System.setProperty("webdriver.chrome.driver", "D:/Dev/webdrivers/chromedriver.exe");
-		new ChromeDriver().get("http://localhost:8080/apenas-teste/limpa");
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("http://localhost:8080/apenas-teste/limpa");
+		driver.close();
 	}
 	
 	@Before

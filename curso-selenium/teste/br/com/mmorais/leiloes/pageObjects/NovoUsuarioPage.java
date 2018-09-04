@@ -6,11 +6,15 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.mmorais.common.CadastroPageObject;
 import br.com.mmorais.common.PageObject;
+import br.com.mmorais.leiloes.util.URLDaAplicacao;
 
 public class NovoUsuarioPage extends CadastroPageObject{
 
 	public NovoUsuarioPage(WebDriver driver) {
-		super(driver, "http://localhost:8080/usuarios/new", "btnSalvar", "errorMessage");
+		super(driver, 
+			  URLDaAplicacao.getUrlBase() + "/usuarios/new", 
+			  "btnSalvar", 
+			  "errorMessage");
 	}
 	
 	protected void populaEstrutura() {

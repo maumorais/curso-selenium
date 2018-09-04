@@ -6,12 +6,13 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.mmorais.common.ListagemPageObject;
 import br.com.mmorais.common.PageObject;
+import br.com.mmorais.leiloes.util.URLDaAplicacao;
 
 public class UsuariosPage extends ListagemPageObject{
 	
 	public UsuariosPage(WebDriver driver) {
 		super(driver,
-			  "http://localhost:8080/usuarios", 
+			  URLDaAplicacao.getUrlBase() + "/usuarios", 
 			  "Novo Usuário",
 			  null,				//idTabelaLista
 			  "usuario", 

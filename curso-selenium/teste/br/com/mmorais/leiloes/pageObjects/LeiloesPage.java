@@ -6,12 +6,13 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.mmorais.common.ListagemPageObject;
 import br.com.mmorais.common.PageObject;
+import br.com.mmorais.leiloes.util.URLDaAplicacao;
 
 public class LeiloesPage extends ListagemPageObject {
 
 	public LeiloesPage(WebDriver driver) {
 		super(driver, 
-			  "http://localhost:8080/leiloes", 
+			  URLDaAplicacao.getUrlBase() + "/leiloes", 
 			  "Novo Leilão",
 			  null,				//idTabelaLista
 			  "leilao", 

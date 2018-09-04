@@ -15,6 +15,7 @@ public abstract class PageObject {
 					check,
 					label
 				}
+	
 	protected WebDriver driver;
 	protected String url;
 	protected LinkedHashMap<String, fieldTypes> estrutura;

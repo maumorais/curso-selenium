@@ -6,12 +6,16 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.mmorais.common.CadastroPageObject;
 import br.com.mmorais.common.PageObject;
+import br.com.mmorais.leiloes.util.URLDaAplicacao;
 
 public class NovoLeilaoPage extends CadastroPageObject{
 	
 
 	public NovoLeilaoPage(WebDriver driver) {
-		super(driver, "http://localhost:8080/leiloes/new", "btnSalvar", "errorMessage");
+		super(driver, 
+			  URLDaAplicacao.getUrlBase() + "/leiloes/new", 
+			  "btnSalvar", 
+			  "errorMessage");
 	}
 	
 	@Override

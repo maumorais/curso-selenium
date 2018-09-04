@@ -13,7 +13,7 @@ import br.com.mmorais.common.CadastroPageObject;
 import br.com.mmorais.common.ListagemPageObject;
 import br.com.mmorais.leiloes.pageObjects.LancesPage;
 import br.com.mmorais.leiloes.pageObjects.LeiloesPage;
-import br.com.mmorais.leiloes.pageObjects.UsuariosPage;
+import br.com.mmorais.leiloes.util.CriadorDeCenarios;
 
 public class LanceSystemTest {
 	private WebDriver driver;
@@ -37,6 +37,11 @@ public class LanceSystemTest {
 		this.leiloes.visita();
 	}
 	
+	@After
+	public void finaliza() {
+		this.driver.close();
+	}
+
 	private void setup() {
 		String usuarioTeste1 = "Paulo Henrique";	
 		String emailTeste1 = "phenrique@somecompany.com";
@@ -45,19 +50,18 @@ public class LanceSystemTest {
 		
 		String nomeTeste = "Geladeira";
 		String valorTeste = "123.0";
-		String usadoTest = "Sim";
+		String usadoTeste = "Sim";
 		
-		String[] valoresTesteUsuario1 = {usuarioTeste1, emailTeste1};
+/*		String[] valoresTesteUsuario1 = {usuarioTeste1, emailTeste1};
 		String[] valoresTesteUsuario2 = {usuarioTeste2, emailTeste2};
-		String[] valoresTesteLeilao = {nomeTeste, valorTeste, usuarioTeste1, usadoTest};
+		String[] valoresTesteLeilao = {nomeTeste, valorTeste, usuarioTeste1, usadoTeste};
 		incluirUsuarioDeTeste(valoresTesteUsuario1);
 		incluirUsuarioDeTeste(valoresTesteUsuario2);
-		incluirLeilaoTeste(valoresTesteLeilao);
-	}
-
-	@After
-	public void finaliza() {
-		this.driver.close();
+		incluirLeilaoTeste(valoresTesteLeilao);*/
+		new CriadorDeCenarios(driver)
+			.umUsuario(usuarioTeste1, emailTeste1)
+			.umUsuario(usuarioTeste2, emailTeste2)
+			.umLeilao(usuarioTeste1, nomeTeste, valorTeste, usadoTeste);
 	}
 
 	@Test
@@ -82,7 +86,7 @@ public class LanceSystemTest {
 		
 	}
 	
-	private void incluirUsuarioDeTeste(String[] valoresTesteUsuario) {
+/*	private void incluirUsuarioDeTeste(String[] valoresTesteUsuario) {
 		UsuariosPage usuarios = new UsuariosPage(driver);
 		usuarios.visita();
 		usuarios.novo().cadastra(valoresTesteUsuario);
@@ -95,5 +99,5 @@ public class LanceSystemTest {
 		CadastroPageObject novoLeilao = leiloes.novo();
 		novoLeilao.cadastra(valoresTesteLeilao);
 	}
-
+*/
 }
