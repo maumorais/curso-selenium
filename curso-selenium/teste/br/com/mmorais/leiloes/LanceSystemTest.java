@@ -82,7 +82,7 @@ public class LanceSystemTest {
 		ListagemPageObject lances = new LancesPage(driver);
 		lance.cadastra(valoresLanceTeste);
 
-		assertTrue(lances.existeNaListagemSemIds(valoresLanceTeste,true));
+		assertTrue(lances.existeNaListagem(valoresLanceTeste,true));
 		
 	}
 	
